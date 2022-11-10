@@ -1,10 +1,11 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import ui
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from configuration import config
+from datetime import datetime
 from time import sleep
 import random
 import os
@@ -89,7 +90,7 @@ def login():
         return check_is_logged_in()
 
     except:
-        print ("Something went wrong!\nPlease re-run the bot to try again")
+        print ("\n\nSomething went wrong!\nPlease re-run the bot to try again")
         return
 
 
@@ -108,13 +109,34 @@ def login_with_cookies():
         #Return your login state
         return check_is_logged_in()
     except:
-        print ("Something went wrong!\nPlease re-run the bot to try again")
+        print ("\n\nSomething went wrong!\nPlease re-run the bot to try again")
         return
 
 def check_is_logged_in():
     #Check if you is logged in
     if driver.current_url == "https://account.presearch.com/":
         return True
+
+def check_day_searchs():
+    try:
+        #Page where we have the list of daily searches.
+        link = "https://account.presearch.com/tokens/usage-rewards?page=3"
+        driver.get(link)
+        wait = ui.WebDriverWait(driver, 10)
+        wait.until(page_loaded)
+
+        #Get a date from 25 searches, if it is equal to today's date, we have all daily searches completed
+        search_date = driver.find_element(By.XPATH, '//*[@id="main"]/table/tbody/tr[5]/td[1]').text
+        search_date = search_date[0 : search_date.index(' ')]
+        today_date = datetime.today().strftime('%Y-%m-%d')
+
+        if search_date == today_date:
+            print("\n\nAll 25 paid daily searches had already been performed.\nCome back again tomorrow.")
+            return True
+
+    except:
+        print ("\n\nSomething went wrong!\nPlease re-run the bot to try again")
+        return
 
 
 def loop_search():
@@ -143,9 +165,9 @@ def loop_search():
                 print("Searched for " + word)
                 sleep(max(config["delay"], 2))
 
-        print("All surveys have been completed!\nIf you didn't get the maximum daily reward, run the bot again.")
+        print("\n\nAll surveys have been completed!\nIf you didn't get the maximum daily reward, run the bot again.")
     except:
-        print ("Something went wrong!\nPlease re-run the bot to try again")
+        print ("\n\nSomething went wrong!\nPlease re-run the bot to try again")
         return
 
 
@@ -158,7 +180,7 @@ def search(word):
 
         return True
     except:
-        print ("Something went wrong!\nPlease re-run the bot to try again")
+        print ("\n\nSomething went wrong!\nPlease re-run the bot to try again")
         return False
         
 
@@ -166,10 +188,18 @@ def search(word):
 
 #If you is logged in do research
 if login():
-    loop_search()
+    #It will do the daily searches only if they are not all done yet.
+    if not check_day_searchs():
+        loop_search()
+
+    reward_tokens = driver.find_element(By.XPATH, '/html/body/div[1]/div/header/div[2]/div[2]/div/div[1]/div/div[1]/div/span[1]').text
+    print("\nYou have collected " + reward_tokens + " Usage Reward Tokens.\n\n")
+
+
 else:
     if os.path.exists("ExtraFiles//cookies.pkl"):
         os.remove("ExtraFiles//cookies.pkl")
-    print("Unable to login to your Presearch account, please re-run the bot to try to login.")
+
+    print("\n\nUnable to login to your Presearch account, please re-run the bot to try to login.")
 
 driver.close()
