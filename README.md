@@ -27,3 +27,10 @@ After completing the challenge, you have to go to the command line and press Ent
 
 Then the bot does the rest by itself. 
 The next times when you run the bot it already logs in by itself using cookies.
+
+
+# Update 2022-11-10
+Now, after logging in to the account, a validation is carried out to test if all the daily paid searches have been made, and if all the searches have already been made, the bot displays a message and exits.
+A message has also been added that indicates how many tokens have been accumulated in the account so far.
+
+![update20221110](https://user-images.githubusercontent.com/31993611/201214161-9bfb7648-2630-4ea4-9c58-36f4fcd1bc03.png)
