@@ -183,7 +183,15 @@ def search(word):
         print ("\n\nSomething went wrong!\nPlease re-run the bot to try again")
         return False
         
+def get_reward_tokens():
+    #Position yourself on the main page of Presearch
+    link = "https://account.presearch.com/"
+    driver.get(link)
+    wait = ui.WebDriverWait(driver, 10)
+    wait.until(page_loaded)
 
+    reward_tokens = driver.find_element(By.XPATH, '//*[@id="main"]/div[2]/div/div[2]/div[2]/a[2]/span/span').text
+    print("\nYou have collected " + reward_tokens + " Usage Reward Tokens.\n\n")
 
 
 #If you is logged in do research
@@ -192,8 +200,7 @@ if login():
     if not check_day_searchs():
         loop_search()
 
-    reward_tokens = driver.find_element(By.XPATH, '/html/body/div[1]/div/header/div[2]/div[2]/div/div[1]/div/div[1]/div/span[1]').text
-    print("\nYou have collected " + reward_tokens + " Usage Reward Tokens.\n\n")
+    get_reward_tokens()
 
 
 else:
