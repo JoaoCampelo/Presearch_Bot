@@ -2,7 +2,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import ui
-from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from configuration import config
 from datetime import datetime
@@ -15,14 +15,16 @@ import pickle
 words = open("ExtraFiles//words.txt", "r").readlines()
 
 #  Setting up chrome
-user_data_path = 'C:/Users/{}/AppData/Local/Google/Chrome/User Data'.format(os.getlogin())
+user_data_path = '/home/username/.config/google-chrome'.format(os.getlogin())
 profile_name = "Profile " + str(config["profile_number"])
 
 options = webdriver.ChromeOptions()
+options.add_experimental_option('excludeSwitches', ['enable-logging'])
 options.add_argument('--user-data-dir=' + user_data_path)
 options.add_argument('--profile-directory=' + profile_name)
+options.add_argument('--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36')
 
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
 driver.execute_script('return navigator.userAgent')
 driver.maximize_window()
 
