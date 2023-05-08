@@ -34,3 +34,14 @@ Now, after logging in to the account, a validation is carried out to test if all
 A message has also been added that indicates how many tokens have been accumulated in the account so far.
 
 ![update20221110](https://user-images.githubusercontent.com/31993611/201214161-9bfb7648-2630-4ea4-9c58-36f4fcd1bc03.png)
+
+
+# Update 2023-05-08
+Now it is possible to use a proxy to do our daily searches. The bot creates a list of possible proxies, then tests until it finds a valid proxy to use.
+For the bot to run with a proxy we have to go to the "configuration.py" file and set the "proxy" option to True.
+
+![configs](https://user-images.githubusercontent.com/31993611/236926960-998b59d3-896b-470c-9e7c-c9b453a9c74e.png)
+
+In this version, some messages were changed, and new ones were created, so that we can have a better perception of what is happening in the bot.
+
+![NewMessages](https://user-images.githubusercontent.com/31993611/236927523-8c534bb3-c34b-460d-a7c9-705336715bf3.png)
