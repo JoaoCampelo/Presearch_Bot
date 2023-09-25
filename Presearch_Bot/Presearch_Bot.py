@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 from ast import Global
 from asyncio.windows_events import NULL
 from selenium import webdriver
@@ -220,8 +220,9 @@ def check_day_searchs():
         wait.until(page_loaded)
 
         #Get a date from 25 searches, if it is equal to today's date, we have all daily searches completed
-        search_date = driver.find_element(By.XPATH, '//*[@id="main"]/div[2]/table/tbody/tr[5]/td[1]').text
-        search_date = search_date[0 : search_date.index(' ')]
+        search_date = driver.find_element(By.XPATH, '//*[@id="main"]/div[2]/div/div[3]/div/div/div[2]/table/tbody/tr[5]/td[2]/div/div/div/div/span').text
+        search_date = datetime.strptime(search_date, '%b %d, %Y %H:%M:%S')
+        search_date = search_date.strftime('%Y-%m-%d')
         today_date = datetime.today().strftime('%Y-%m-%d')
 
         if search_date == today_date:
@@ -283,7 +284,7 @@ def get_reward_tokens():
     wait = ui.WebDriverWait(driver, 10)
     wait.until(page_loaded)
 
-    reward_tokens = driver.find_element(By.XPATH, '//*[@id="main"]/div[2]/div/div[2]/div[2]/a[2]/span/span').text
+    reward_tokens = driver.find_element(By.XPATH, '//*[@id="main"]/div[2]/div/div[3]/div/div/div[2]/table/tbody/tr[5]/td[2]/div/div/div/div/span').text
     print("\nYou have collected " + reward_tokens + " Usage Reward Tokens.\n\n")
 
 
