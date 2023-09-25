@@ -284,7 +284,7 @@ def get_reward_tokens():
     wait = ui.WebDriverWait(driver, 10)
     wait.until(page_loaded)
 
-    reward_tokens = driver.find_element(By.XPATH, '//*[@id="main"]/div[2]/div/div[3]/div/div/div[2]/table/tbody/tr[5]/td[2]/div/div/div/div/span').text
+    reward_tokens = driver.find_element(By.XPATH, '/html/body/div[1]/div/header/div[2]/div[2]/div/div[1]/div/div[1]/div/span[1]').text
     print("\nYou have collected " + reward_tokens + " Usage Reward Tokens.\n\n")
 
 
