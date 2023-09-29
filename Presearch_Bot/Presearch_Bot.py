@@ -167,12 +167,16 @@ def login():
     
         #Click in Login button
         driver.find_element(By.XPATH, '//*[@id="login-form"]/form/div[3]/div[3]/button').click()
+        wait = ui.WebDriverWait(driver, 10)
+        wait.until(page_loaded)
+        
+        sleep(5)
 
         #Position yourself on your Presearch profile page
         driver.get("https://account.presearch.com/")
         wait = ui.WebDriverWait(driver, 10)
         wait.until(page_loaded)
-
+        
         #Save cookies so you don't have to log in again next time
         pickle.dump(driver.get_cookies() , open("ExtraFiles//cookies.pkl","wb"))
     
